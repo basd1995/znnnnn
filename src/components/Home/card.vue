@@ -1,5 +1,5 @@
 <template>
-  <div id="card">
+  <div id="card" @click="toPath(url)">
     <p class="title">{{title}}</p>
     <img :src=imgUrl alt="">
     <span class="info">{{info}}</span>
@@ -23,6 +23,9 @@
       imgUrl: {
         type: String
       },
+      url:{
+        type: String
+      },
       info: {
         type: String
       },
@@ -33,6 +36,13 @@
       describe: {
         type: Boolean,
         default: false
+      }
+    },
+    methods:{
+      toPath(p){
+        if (p) {
+          window.location.href = p;
+        }
       }
     }
   }
@@ -70,10 +80,8 @@
   }
 
   #card:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     /*transition: all 0.3s linear;*/
-    -webkit-box-shadow: 0 5px 20px #666;
-    box-shadow: 0 5px 20px #666;
     z-index: 10;
   }
 </style>

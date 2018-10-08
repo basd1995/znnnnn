@@ -1,7 +1,7 @@
 <template>
   <div id="card">
     <div class="top">
-      <p>中山西路解放路-重大事故-1死2伤 <span>(Ⅱ级)</span></p>
+      <p>{{title}} <span>(Ⅱ级)</span></p>
       <div class="inner">
         <div :id=echartId class="mychart"></div>
         <div class="info">
@@ -34,6 +34,9 @@
   export default {
     props:{
       echartId:{
+        type: Number
+      },
+      title:{
         type: String
       }
     },

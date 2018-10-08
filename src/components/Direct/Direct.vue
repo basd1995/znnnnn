@@ -17,10 +17,10 @@
               @click="openTrafficBetter"></b-menu>
     </div>
     <transition name="slide-fade">
-      <div class="event-list" v-if="showEvent">
-        <b-eventcard echart-id="top" @click="openView"></b-eventcard>
-        <b-eventcard echart-id="mid" @click="openView"></b-eventcard>
-        <b-eventcard echart-id="bottom"></b-eventcard>
+      <div class="event-list" v-if="showEventList">
+        <b-eventcard v-for="(item,index) of eventList" :title="item.title" :key="index" :echart-id="index+1" @click="openView"></b-eventcard>
+        <!--<b-eventcard title="" echart-id="mid" @click="openView"></b-eventcard>-->
+        <!--<b-eventcard title="" echart-id="bottom"></b-eventcard>-->
       </div>
     </transition>
     <div class="relation-view" v-if="showView">
@@ -58,6 +58,7 @@
     },
     data() {
       return {
+        showEventList: false,
         showView: false,
         viewId: null,
         act: false,
@@ -90,11 +91,30 @@
           showPanel: false //是否显示路况提示面板,BmapLib需要在baseconf声明
         }),
         nav: '',
+        eventList:[
+          {
+            title: '中山西路解放路重大事故'
+          },
+          {
+            title: '中山西路解放路重大事故'
+          },
+          {
+            title: '中山西路解放路重大事故'
+          },
+          {
+            title: '中山西路解放路重大事故'
+          }
+        ]
       };
     },
     mounted() {
       this.map();
-      this.openEvent();
+      try {
+        this.openEvent();
+      }catch (e) {
+        
+      }
+      
     },
     methods: {
       map() {
@@ -103,12 +123,13 @@
         map.centerAndZoom(new BMap.Point(121.47, 31.23), 13); // 初始化地图,设置中心点坐标和地图级别
         map.setCurrentCity("上海");
         map.setMapStyle({style: "light"});
+        map.enableScrollWheelZoom(true);
       },
       openView(id) {
         if (this.viewId) {
           if (this.viewId == id&&this.showView){
             this.showView = false;
-            console.log(id);
+            console.log('this.viewId == id&&this.showView',id);
           }else {
             this.viewId = id;
             this.showView = false;
@@ -132,6 +153,8 @@
       },
       //路况
       openTraffic() {
+        this.showView = false;
+        map.clearOverlays();
         this.nav = '路况';
         this.showTraffic = !this.showTraffic;
         this.showEvent = false;
@@ -144,14 +167,21 @@
         this.showTrafficBetter = false;
         //实时路况
         if (this.showTraffic) {
+          this.showEventList = true;
           map.addControl(this.trafficCtrl);
           this.trafficCtrl.showTraffic({predictDate: {hour: 15, weekday: 1}}); //默认开启
         } else {
-          map.removeControl(this.trafficCtrl);
+          this.showEventList = false;
+          try {
+            map.removeControl(this.trafficCtrl);
+          }catch (e) {
+
+          }
         }
       },
       //事件
       openEvent() {
+        this.showView = false;
         this.nav = '事件';
         map.clearOverlays();
         this.showEvent = !this.showEvent;
@@ -164,6 +194,7 @@
         this.showAct = false;
         this.showTrafficBetter = false;
         if (this.showEvent) {
+          this.showEventList = true;
           let bounds = map.getBounds();
           let sw = bounds.getSouthWest();
           let ne = bounds.getNorthEast();
@@ -174,11 +205,24 @@
             this.addMark(point, this.waring);
           }
         } else {
+          this.showEventList = false;
           map.clearOverlays();
+        }
+        //实时路况
+        if (this.showTraffic) {
+          map.addControl(this.trafficCtrl);
+          this.trafficCtrl.showTraffic({predictDate: {hour: 15, weekday: 1}}); //默认开启
+        } else {
+          try {
+            map.removeControl(this.trafficCtrl);
+          }catch (e) {
+
+          }
         }
       },
       //勤务调度
       openDispatch() {
+        this.showView = false;
         this.nav = '勤务调度';
         map.clearOverlays();
         this.showDis = !this.showDis;
@@ -191,6 +235,7 @@
         this.showAct = false;
         this.showTrafficBetter = false;
         if (this.showDis) {
+          this.showEventList = true;
           let bounds = map.getBounds();
           let sw = bounds.getSouthWest();
           let ne = bounds.getNorthEast();
@@ -201,11 +246,24 @@
             this.addMark(point, this.police);
           }
         } else {
+          this.showEventList = false;
           map.clearOverlays();
+        }
+        //实时路况
+        if (this.showTraffic) {
+          map.addControl(this.trafficCtrl);
+          this.trafficCtrl.showTraffic({predictDate: {hour: 15, weekday: 1}}); //默认开启
+        } else {
+          try {
+            map.removeControl(this.trafficCtrl);
+          }catch (e) {
+
+          }
         }
       },
       //重大活动
       openActive() {
+        this.showView = false;
         this.nav = '重大活动';
         map.clearOverlays();
         this.showAct = !this.showAct;
@@ -218,6 +276,7 @@
         this.showEme = false;
         this.showTrafficBetter = false;
         if (this.showAct) {
+          this.showEventList = true;
           let bounds = map.getBounds();
           let sw = bounds.getSouthWest();
           let ne = bounds.getNorthEast();
@@ -228,11 +287,24 @@
             this.addMark(point, this.red);
           }
         } else {
+          this.showEventList = false;
           map.clearOverlays();
+        }
+        //实时路况
+        if (this.showTraffic) {
+          map.addControl(this.trafficCtrl);
+          this.trafficCtrl.showTraffic({predictDate: {hour: 15, weekday: 1}}); //默认开启
+        } else {
+          try {
+            map.removeControl(this.trafficCtrl);
+          }catch (e) {
+
+          }
         }
       },
       //应急
       openEme() {
+        this.showView = false;
         this.nav = '应急';
         map.clearOverlays();
         this.showEme = !this.showEme;
@@ -245,6 +317,7 @@
         this.showCar = false;
         this.showTrafficBetter = false;
         if (this.showEme) {
+          this.showEventList = true;
           let bounds = map.getBounds();
           let sw = bounds.getSouthWest();
           let ne = bounds.getNorthEast();
@@ -255,11 +328,13 @@
             this.addMark(point, this.emg);
           }
         } else {
+          this.showEventList = false;
           map.clearOverlays();
         }
       },
       //信号优化
       openTrafficBetter() {
+        this.showView = false;
         this.nav = '信号优化';
         map.clearOverlays();
         this.showTrafficBetter = !this.showTrafficBetter;
@@ -272,6 +347,7 @@
         this.showCar = false;
         this.showEme = false;
         if (this.showTrafficBetter) {
+          this.showEventList = true;
           let bounds = map.getBounds();
           let sw = bounds.getSouthWest();
           let ne = bounds.getNorthEast();
@@ -282,11 +358,24 @@
             this.addMark(point, this.trb);
           }
         } else {
+          this.showEventList = false;
           map.clearOverlays();
+        }
+        //实时路况
+        if (this.showTraffic) {
+          map.addControl(this.trafficCtrl);
+          this.trafficCtrl.showTraffic({predictDate: {hour: 15, weekday: 1}}); //默认开启
+        } else {
+          try {
+            map.removeControl(this.trafficCtrl);
+          }catch (e) {
+
+          }
         }
       },
       //vip道路
       openVipRoad() {
+        this.showView = false;
         this.nav = 'VIP道路';
         map.clearOverlays();
         this.showVipRoad = !this.showVipRoad;
@@ -299,12 +388,25 @@
         this.showCar = false;
         this.showEme = false;
         if (this.showVipRoad) {
+          this.showEventList = true;
           let start = "东方明珠";
           let end = "上海博物馆";
           let driving = new BMap.DrivingRoute(map, {renderOptions: {map: map, autoViewport: true}, policy: '最少时间'});
           driving.search(start, end);
         } else {
+          this.showEventList = false;
           map.clearOverlays();
+        }
+        //实时路况
+        if (this.showTraffic) {
+          map.addControl(this.trafficCtrl);
+          this.trafficCtrl.showTraffic({predictDate: {hour: 15, weekday: 1}}); //默认开启
+        } else {
+          try {
+            map.removeControl(this.trafficCtrl);
+          }catch (e) {
+
+          }
         }
       },
       /*
