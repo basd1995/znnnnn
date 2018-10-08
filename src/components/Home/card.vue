@@ -12,6 +12,8 @@
   </div>
 </template>
 <script>
+  //信息服务http://www.jtcx.sh.cn/
+  //运维 闪测
   export default {
     name: 'card',
     props: {
@@ -45,7 +47,6 @@
   }
 
   #card > img {
-    width: 24.5vh;
     height: 24.5vh;
   }
 
@@ -59,7 +60,6 @@
     color: var(--color-title);
     top: 1vh;
     font-weight: 900;
-    /*letter-spacing: var(--letter-spacing);*/
   }
 
   .info, .lang-info {

@@ -98,7 +98,7 @@
   }
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   #card {
     width: 70vh;
     padding: 15px;

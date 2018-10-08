@@ -18,7 +18,7 @@
       <div v-if="show" class="right">
         <b-card class="mr mb" title="运维" info="V 3.0 系统" :img-url="yunwei"></b-card>
         <b-date class="mr"></b-date>
-        <b-card class="mr mb" title="智能联网" :img-url="zhinenglianwang"></b-card>
+        <b-card class="mr mb" title="智能网联" :img-url="zhinenglianwang"></b-card>
         <b-card class="mr" title="信号优化" :img-url="xinhaoyouhua"></b-card>
         <b-card title="信息服务" :img-url="xinxifuwu" :lang-info="true"></b-card>
       </div>

@@ -2,7 +2,7 @@
   <div class="home">
     <div id="map"></div>
     <div class="nav">
-      <span>指挥调度>></span>{{nav}}<span>专栏</span>
+      <span style="cursor:pointer;" @click="toHome">指挥调度>></span>{{nav}}<span>专栏</span>
     </div>
     <div class="menu-list">
       <b-menu :img-url="event" name="事件" :active="showEvent" @click="openEvent"></b-menu>
@@ -316,7 +316,10 @@
         });
         let eventMarker = new BMap.Marker(point, {icon: icon, offset: new BMap.Size(0, -25)});  // 创建标注
         map.addOverlay(eventMarker);
-        eventMarker.setAnimation(BMAP_ANIMATION_BOUNCE);
+        // eventMarker.setAnimation(BMAP_ANIMATION_BOUNCE);
+      },
+      toHome(){
+        this.$router.push('/');
       }
     }
   };
