@@ -5,15 +5,15 @@
       <span style="cursor:pointer;" @click="toHome">指挥调度>></span>{{nav}}<span>专栏</span>
     </div>
     <div class="menu-list">
-      <b-menu :img-url="event" name="事件" :active="showEvent" @click="openEvent"></b-menu>
-      <b-menu :img-url="traffic" name="路况" :active="showTraffic" @click="openTraffic"></b-menu>
-      <b-menu :img-url="viproad" name="VIP线路" :active="showVipRoad" @click="openVipRoad"></b-menu>
-      <b-menu :img-url="vipcar" name="VIP车辆" :active="showVipCar" @click="showVipCar = !showVipCar"></b-menu>
-      <b-menu :img-url="car" name="重点车辆" :active="showCar" @click="showCar = !showCar"></b-menu>
-      <b-menu :img-url="dispatch" name="勤务调度" :active="showDis" @click="openDispatch"></b-menu>
-      <b-menu :img-url="eme" name="应急" :active="showEme" @click="openEme"></b-menu>
-      <b-menu :img-url="active" name="重大活动" :active="showAct" @click="openActive"></b-menu>
-      <b-menu :img-url="trafficbetter" name="信号优化" :active="showTrafficBetter"
+      <b-menu class="bmenu" :img-url="event" name="事件" :active="showEvent" @click="openEvent"></b-menu>
+      <b-menu class="bmenu" :img-url="traffic" name="路况" :active="showTraffic" @click="openTraffic"></b-menu>
+      <b-menu class="bmenu" :img-url="viproad" name="VIP线路" :active="showVipRoad" @click="openVipRoad"></b-menu>
+      <b-menu class="bmenu" :img-url="vipcar" name="VIP车辆" :active="showVipCar" @click="showVipCar = !showVipCar"></b-menu>
+      <b-menu class="bmenu" :img-url="car" name="重点车辆" :active="showCar" @click="showCar = !showCar"></b-menu>
+      <b-menu class="bmenu" :img-url="dispatch" name="勤务调度" :active="showDis" @click="openDispatch"></b-menu>
+      <b-menu class="bmenu" :img-url="eme" name="应急" :active="showEme" @click="openEme"></b-menu>
+      <b-menu class="bmenu" :img-url="active" name="重大活动" :active="showAct" @click="openActive"></b-menu>
+      <b-menu class="bmenu" :img-url="trafficbetter" name="信号优化" :active="showTrafficBetter"
               @click="openTrafficBetter"></b-menu>
     </div>
     <transition name="slide-fade">
@@ -438,27 +438,27 @@
       width: 100%;
       bottom: 10px;
       text-align: center;
-      > b-menu {
+      > .bmenu {
         &:not(:last-child) {
-          margin-right: 10px;
+          margin-right: 1.5vh;
         }
       }
     }
     > .event-list {
       position: absolute;
-      right: 1vw;
+      right: 2vh;
       height: 75vh;
       overflow-y: auto;
     }
     > .relation-view {
       position: absolute;
-      right: 73vh;
+      right: 77vh;
     }
     > .nav{
       position: absolute;
       background: linear-gradient(180deg, rgba(246, 246, 222, 0.8) 0%, #fff);
       padding: 10px 20px;
-      font-size: 20px;
+      font-size: 3vh;
       top: 10px;
     }
   }

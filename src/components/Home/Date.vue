@@ -4,7 +4,7 @@
       <img src="../../assets/imgs/cloud.png" alt="">
       <div class="tmp">
         <div class="tmp-num">
-          <span>29<span>℃</span></span>
+          <span>20<span>℃</span></span>
         </div>
         <div class="tmp-dw">
           <p>阴(实时)</p>
@@ -60,8 +60,8 @@
 </script>
 <style scoped lang="scss">
   #date{
-    width: 50vh;
-    height: 24.5vh;
+    width: 65vh;
+    height: 30vh;
     display: inline-flex;
     justify-content: space-around;
     align-items: flex-end;
@@ -84,7 +84,7 @@
   }
   .tmp-num{
     /*display: inline-block;*/
-    font-size: 20px;
+    font-size: 4vh;
     color: #fff;
   }
   .tmp-dw{
@@ -92,7 +92,7 @@
     color: #fff;
   }
   .tmp-dw>p{
-    font-size: 20px;
+    font-size: 4vh;
   }
   .real-time{
     width: 25vh;
@@ -104,12 +104,14 @@
   }
   .ti{
     color: #fff;
-    font-size: 40px;
+    font-size: 5vh;
     font-weight: 500;
     letter-spacing: 2px;
   }
   .da{
-    color: #fff;
-    font-size: 18px;
+    color: #ccc;
+    font-size: 2.5vh;
+    letter-spacing: 1.5px;
+    font-weight: 400;
   }
 </style>

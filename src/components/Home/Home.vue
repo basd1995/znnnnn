@@ -1,28 +1,31 @@
 <template>
   <div class="home">
-    <div class="c-name">
-      <img src="../../assets/imgs/logo.png" alt="">
-      <p>城市智慧交通综合信息平台</p>
-    </div>
     <transition name="slide-fade">
       <div v-if="show" class="left">
-        <b-map title="指挥调度" :img-url="zhihuidiaodu" :button="buttonList"></b-map>
+        <div class="c-name">
+          <img src="../../assets/imgs/logo.png" alt="">
+          <p>城市智慧交通综合信息平台</p>
+        </div>
+        <b-map title="指挥调度" :img-url="zhihuidiaodugif" :button="buttonList"></b-map>
       </div>
     </transition>
     <transition name="slide-fade">
       <div v-if="show" class="mid">
-        <b-describe title="数据智能" :img-url="shujuzhineng"></b-describe>
+        <b-describe title="数据智能" :img-url="shujuzhinenggif"></b-describe>
       </div>
     </transition>
     <transition name="slide-fade">
       <div v-if="show" class="right">
-        <b-card class="mr mb" title="运维" info="V 3.0 系统" :img-url="yunwei" url="http://192.168.1.53:8090"></b-card>
-        <b-date class="mr"></b-date>
         <b-card class="mr mb" title="智能网联" :img-url="zhinenglianwang"></b-card>
-        <b-card class="mr" title="信号优化" :img-url="xinhaoyouhua"></b-card>
-        <b-card title="信息服务" :img-url="xinxifuwu" :lang-info="true" url="http://www.jtcx.sh.cn/"></b-card>
+        <b-date class="mr"></b-date>
+        <b-card class="mr" title="信号优化" :img-url="xinhaoyouhuagif"></b-card>
+        <b-card class="mr mb" title="路测宝" :img-url="yunwei" url="http://192.168.1.53:8090"></b-card>
+        <b-card title="信息服务" :img-url="xinxifuwu" :lang-info="false" url="http://www.jtcx.sh.cn/"></b-card>
       </div>
     </transition>
+    <div class="c-info">
+      <p>上海智能交通有限公司 Shanghai Intelligent Transportation Co., Ltd.</p>
+    </div>
   </div>
 </template>
 
@@ -33,9 +36,12 @@
   import Mapc from './map-crad'
   import yunwei from '../../assets/imgs/yunwei.png'
   import zhinenglianwang from '../../assets/imgs/zhinenglianwang.png'
+  import xinhaoyouhuagif from '../../assets/imgs/xinhaoyouhua.gif'
   import xinhaoyouhua from '../../assets/imgs/xinhaoyouhua.png'
   import xinxifuwu from '../../assets/imgs/xinxifuwu.png'
+  import shujuzhinenggif from '../../assets/imgs/bigdata.gif'
   import shujuzhineng from '../../assets/imgs/bigdata.png'
+  import zhihuidiaodugif from '../../assets/imgs/zhihuidiaodu.gif'
   import zhihuidiaodu from '../../assets/imgs/zhihuidiaodu.png'
 
   export default {
@@ -54,15 +60,18 @@
         xinhaoyouhua: xinhaoyouhua,
         xinxifuwu: xinxifuwu,
         shujuzhineng: shujuzhineng,
+        shujuzhinenggif: shujuzhinenggif,
         zhihuidiaodu: zhihuidiaodu,
+        zhihuidiaodugif: zhihuidiaodugif,
+        xinhaoyouhuagif: xinhaoyouhuagif,
         buttonList:[
           {
             name:"长三角",
-            path:'Direct'
+            path:'http://192.168.2.86:8091'
           },
           {
             name:"上海",
-            path:'http://www.baidu.com'
+            path:''
           },
           {
             name:"VIP",
@@ -85,36 +94,34 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .home {
+    /*padding: 5vh 0;*/
     position: relative;
-    width: 100%;
+    min-width: 1920px;
     height: 100%;
     background: url("../../assets/imgs/background.png");
     background-size:100% 100%;
     display: flex;
-    align-items: center;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
   }
   .c-name{
-    position: absolute;
-    display: inline-flex;
-    top: 0;
-    padding-top: 4vh;
-    padding-left: 4vh;
     width: 100%;
     align-items: center;
   }
   .c-name >p{
     /*cursor: pointer;*/
+    margin-left: -3%;
     color: #fff;
-    letter-spacing: 10px;
-    font-size: 20px;
+    letter-spacing: 3px;
+    font-size: 5vh;
     font-style: italic;
-    margin-left: 5%;
-    text-shadow: 1px 1px 1px #333;
+    text-shadow: 1px 1px 1px #666;
+    margin-bottom: 7vh;
+
   }
   .c-name >img{
-    height: 7vh;
+    height: 6vh;
+    margin-top: 14vh;
   }
   .mr {
     margin-right: 1vh;
@@ -125,17 +132,30 @@
   }
 
   .left {
-    display: inline-block;
+    /*display: inline-block;*/
   }
 
   .mid{
-    display: inline-block;
+    margin-left: 2vh;
   }
   .right {
-    display: inline-block;
-    height: 50vh;
-    width: 77vh;
+    align-items: center;
+    /*display: inline-block;*/
+    width: 107vh;
     font-size: 0;
+    /*height: 51vh;*/
+    margin-top: 4vh;
+    margin-left: 2vh;
+  }
+  .c-info{
+    position: absolute;
+    text-align: center;
+    font-size: 2vh;
+    letter-spacing: 0.5px;
+    font-weight: 200;
+    color: #ccc;
+    bottom: 10vh;
+    right: 15%;
   }
 
   .slide-fade-enter-active {

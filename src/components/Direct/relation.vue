@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-  import jon from './les-miserables'
+  import request from '../../service/request'
   // 引入基本模板
   let echarts = require("echarts/lib/echarts");
   // 引入柱状图组件
@@ -16,11 +16,14 @@
   require("echarts/lib/component/legend");
   require("echarts/lib/component/tooltip");
   require("echarts/lib/component/title");
+  require("echarts/extension/dataTool");
+  // require("echarts/")
   export default {
     props:['index'],
     data(){
       return {
-        rEchart:{}
+        rEchart:{},
+        // ss: ss
       }
     },
     mounted(){
@@ -29,58 +32,128 @@
       )
     },
     methods:{
-      createEcharts(id){
+      // createEcharts(id){
+      //   let myChart = echarts.init(document.getElementById(id));
+      //   myChart.showLoading();
+      //   let json = jon;
+      //   myChart.hideLoading();
+      //   let option = {};
+      //   myChart.setOption(option = {
+      //     animationDurationUpdate: 1500,
+      //     animationEasingUpdate: 'quinticInOut',
+      //     series : [
+      //       {
+      //         type: 'graph',
+      //         layout: 'none',
+      //         // progressiveThreshold: 700,
+      //         data: json.nodes.map(function (node) {
+      //           return {
+      //             x: node.x,
+      //             y: node.y,
+      //             id: node.id,
+      //             name: node.label,
+      //             symbolSize: node.size,
+      //             itemStyle: {
+      //               normal: {
+      //                 color: node.color
+      //               }
+      //             }
+      //           };
+      //         }),
+      //         edges: json.edges.map(function (edge) {
+      //           return {
+      //             source: edge.sourceID,
+      //             target: edge.targetID
+      //           };
+      //         }),
+      //         label: {
+      //           emphasis: {
+      //             position: 'right',
+      //             show: true
+      //           }
+      //         },
+      //         roam: true,
+      //         focusNodeAdjacency: true,
+      //         lineStyle: {
+      //           normal: {
+      //             width: 0.5,
+      //             curveness: 0.3,
+      //             opacity: 0.7
+      //           }
+      //         }
+      //       }
+      //     ]
+      //   }, true);
+      // },
+      createEcharts(id) {
         let myChart = echarts.init(document.getElementById(id));
-        myChart.showLoading();
-        let json = jon;
-        myChart.hideLoading();
-        let option = {};
-        myChart.setOption(option = {
-          animationDurationUpdate: 1500,
-          animationEasingUpdate: 'quinticInOut',
-          series : [
-            {
-              type: 'graph',
-              layout: 'none',
-              // progressiveThreshold: 700,
-              data: json.nodes.map(function (node) {
-                return {
-                  x: node.x,
-                  y: node.y,
-                  id: node.id,
-                  name: node.label,
-                  symbolSize: node.size,
-                  itemStyle: {
-                    normal: {
-                      color: node.color
-                    }
+        request('http://localhost:8080/static/ss.gexf').then(response => {
+          let gxef = response;
+          myChart.showLoading();
+          myChart.hideLoading();
+          let graph = echarts.dataTool.gexf.parse(gxef);
+          let categories = [];
+          for (let i = 0; i < 9; i++) {
+            categories[i] = {
+              name: '类目' + i
+            };
+          }
+          graph.nodes.forEach(function (node) {
+            node.itemStyle = null;
+            node.value = node.symbolSize;
+            node.symbolSize /= 1.5;
+            node.label = {
+              normal: {
+                show: node.symbolSize > 30
+              }
+            };
+            node.category = node.attributes.modularity_class;
+          });
+          myChart.setOption({
+            tooltip: {},
+            // legend: [{
+            //   // selectedMode: 'single',
+            //   data: categories.map(function (a) {
+            //     return a.name;
+            //   })
+            // }],
+            animationDuration: 1500,
+            animationEasingUpdate: 'quinticInOut',
+            series : [
+              {
+                name: 'Les Miserables',
+                type: 'graph',
+                layout: 'none',
+                data: graph.nodes,
+                links: graph.links,
+                categories: categories,
+                roam: true,
+                focusNodeAdjacency: true,
+                itemStyle: {
+                  normal: {
+                    borderColor: '#fff',
+                    borderWidth: 1,
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(0, 0, 0, 0.3)'
                   }
-                };
-              }),
-              edges: json.edges.map(function (edge) {
-                return {
-                  source: edge.sourceID,
-                  target: edge.targetID
-                };
-              }),
-              label: {
-                emphasis: {
+                },
+                label: {
                   position: 'right',
-                  show: true
-                }
-              },
-              roam: true,
-              focusNodeAdjacency: true,
-              lineStyle: {
-                normal: {
-                  width: 0.5,
-                  curveness: 0.3,
-                  opacity: 0.7
+                  formatter: '{b}'
+                },
+                lineStyle: {
+                  color: 'source',
+                  curveness: 0.3
+                },
+                emphasis: {
+                  lineStyle: {
+                    width: 10
+                  }
                 }
               }
-            }
-          ]
-        }, true);
+            ]
+          },true)
+        });
       }
     }
   }
@@ -96,6 +169,7 @@
       padding: 5px 0;
       text-align: center;
       width: 100%;
+      font-size: 2.5vh;
       background: #fff;
       >span{
         color: red;

@@ -42,26 +42,21 @@
     },
     data() {
       return {
-        myEcharts:{}
-      }
-    },
-    mounted(){
-      this.myEcharts = this.createEcharts(
-        this.echartId
-      );
-      window.eventHub.$on('resize', this.resizeEchart)
-    },
-    methods: {
-      createEcharts(id) {
-        console.log(id);
-        let echartObj = echarts.init(document.getElementById(id));
-        echartObj.setOption({
+        myEcharts:{},
+        chartOption:{
           tooltip: {
             trigger: 'axis'
           },
           textStyle:{
-            color: '#000'
+            color: '#000',
+            fontSize: 8
           },
+          grid: [
+            {
+              width: '100%',
+              height: "70%"
+            }
+          ],
           radar: [
             {
               nameGap : 5,
@@ -72,8 +67,7 @@
                 {text: '资源', max: 100},
                 {text: '安全', max: 100}
               ],
-              center: ['50%', '55%'],
-              radius: 60
+              center: ['50%', '55%']
             }
           ],
           series: [
@@ -91,11 +85,29 @@
               ]
             }
           ]
-        }, true);
+        }
+      }
+    },
+    mounted(){
+      this.checkView();
+      window.eventHub.$on('resize', this.resizeEchart);
+    },
+    methods: {
+      createEcharts(id) {
+        console.log(id);
+        let echartObj = echarts.init(document.getElementById(id));
+        echartObj.setOption(this.chartOption, true);
         return echartObj;
       },
       resizeEchart(){
+        this.checkView();
         this.myEcharts.resize();
+      },
+      checkView(){
+        let ch = document.documentElement.clientHeight;
+        this.chartOption.textStyle.fontSize = ch * 0.025;
+        this.myEcharts = this.createEcharts(this.echartId);
+        console.log(this.chartOption.textStyle.fontSize);
       }
     }
   }
@@ -103,17 +115,17 @@
 </script>
 <style lang="scss" scoped>
   #card {
-    width: 70vh;
+    width: 75vh;
     padding: 15px;
     background-color: rgba(255, 255, 255, .9);
     user-select:none;
     position: relative;
     border-bottom: 1px solid #ccc;
     > .top{
-      height: 25vh;
+      height: 28vh;
       > p {
         width: 100%;
-        font-size: 20px;
+        font-size: 3.5vh;
         > span {
           color: red;
         }
@@ -124,13 +136,14 @@
         display: inline-flex;
         > .mychart {
           width: 45%;
+          height: 100%;
         }
         > .info {
           display: inline-flex;
           flex-direction: column;
           justify-content: center;
           > p {
-            font-size: 12px;
+            font-size: 1.9vh;
             font-weight: 100;
             color: #666;
             &:not(:last-child) {
@@ -151,7 +164,7 @@
       color: #666;
       >span{
         display: inline-block;
-        font-size: 12px;
+        font-size: 1.5vh;
         font-weight: 200;
         padding: 5px 10px;
         border: 1px solid #ccc;

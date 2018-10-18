@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-from-urlencoded;charset=UTF-8';
-//跨域
-axios.defaults.withCredentials = true;
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-from-urlencoded;charset=UTF-8';
+// //跨域
+axios.defaults.withCredentials = false;
 
 export default function request(url, type = 'GET', data = {}) {
   return new Promise((resolve, reject) => {

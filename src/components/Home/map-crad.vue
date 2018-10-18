@@ -42,8 +42,7 @@
   #card {
     position: relative;
     display: inline-block;
-    width: 50vh;
-    height: 50vh;
+    width: 85vh;
     transition: all 0.1s linear;
     background: #fff;
   }
@@ -51,22 +50,24 @@
   #card > img {
     width: 100%;
   }
-  .title{
-    /*position: absolute;*/
-    margin-left: 2vh;
-  }
 
   .title {
-    font-size: 24px;
+    position: absolute;
+    margin-left: 2vh;
+    font-size: 4vh;
     color: var(--color-title);
-    font-weight: 900;
+    font-weight: 500;
+    bottom: 10vh;
   }
   .button-group{
+    position: absolute;
     text-align: center;
+    margin-left: 2vh;
+    bottom: -2vh;
   }
   .inner-button{
     cursor: pointer;
-    font-size: 14px;
+    font-size: 2.5vh;
     display: inline-block;
     width: 10vh;
     height: 10vh;

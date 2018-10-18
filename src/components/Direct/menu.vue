@@ -27,8 +27,8 @@
 <style lang="scss">
   #menu{
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 15vh;
+    height: 15vh;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -42,14 +42,14 @@
     }
     >img {
       display: inline-block;
-      width: 40px;
-      height: 40px;
-      margin-top: 10px;
+      width: 7vh;
+      height: 7vh;
+      margin-top: 3vh;
       user-select:none;
     }
     >p{
-      margin-top: 5px;
-      font-size: 12px;
+      margin-top: 1vh;
+      font-size: 2vh;
       user-select:none;
     }
   }
