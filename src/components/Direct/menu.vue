@@ -27,8 +27,8 @@
 <style lang="scss">
   #menu{
     position: relative;
-    width: 15vh;
-    height: 15vh;
+    width: 13vh;
+    height: 13vh;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
@@ -42,8 +42,8 @@
     }
     >img {
       display: inline-block;
-      width: 7vh;
-      height: 7vh;
+      width: 5vh;
+      height: 5vh;
       margin-top: 3vh;
       user-select:none;
     }

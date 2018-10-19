@@ -2,7 +2,7 @@
   <div class="home">
     <div id="map"></div>
     <div class="nav">
-      <span style="cursor:pointer;" @click="toHome">指挥调度>></span>{{nav}}<span>专栏</span>
+      <span style="cursor:pointer;" @click="toHome">指挥调度>></span><span class="now">{{nav}}<span>专栏</span></span>
     </div>
     <div class="menu-list">
       <b-menu class="bmenu" :img-url="event" name="事件" :active="showEvent" @click="openEvent"></b-menu>
@@ -18,9 +18,7 @@
     </div>
     <transition name="slide-fade">
       <div class="event-list" v-if="showEventList">
-        <b-eventcard v-for="(item,index) of eventList" :title="item.title" :key="index" :echart-id="index+1" @click="openView"></b-eventcard>
-        <!--<b-eventcard title="" echart-id="mid" @click="openView"></b-eventcard>-->
-        <!--<b-eventcard title="" echart-id="bottom"></b-eventcard>-->
+        <b-eventcard :class="{bg: showView}" v-for="(item,index) of eventList" :title="item.title" :show-view="showView" :item-index="viewId" :key="index" :echart-id="index+1" @click="openView"></b-eventcard>
       </div>
     </transition>
     <div class="relation-view" v-if="showView">
@@ -126,21 +124,24 @@
         map.enableScrollWheelZoom(true);
       },
       openView(id) {
-        if (this.viewId) {
-          if (this.viewId == id&&this.showView){
-            this.showView = false;
-            console.log('this.viewId == id&&this.showView',id);
+        if (id!=null) {
+          if (this.viewId) {
+            if (this.viewId == id&&this.showView){
+              this.showView = false;
+            }else {
+              this.viewId = id;
+              this.showView = false;
+              this.showView = true;
+            }
           }else {
-            this.viewId = id;
-            this.showView = false;
             this.showView = true;
-            console.log(id);
+            this.viewId = id;
           }
         }else {
-          this.showView = true;
+          this.showView = false;
           this.viewId = id;
-          console.log(id);
         }
+
       },
       //互斥方法
       mutex(n) {
@@ -448,7 +449,11 @@
       position: absolute;
       right: 2vh;
       height: 75vh;
-      overflow-y: auto;
+      overflow-x: auto;
+      > .bg{
+        background: linear-gradient(180deg, rgba(246, 246, 222, 0.8) 0%, #fff 50%);
+      }
+      /*overflow-y: auto;*/
     }
     > .relation-view {
       position: absolute;
@@ -459,7 +464,10 @@
       background: linear-gradient(180deg, rgba(246, 246, 222, 0.8) 0%, #fff);
       padding: 10px 20px;
       font-size: 3vh;
-      top: 10px;
+      top: 5vh;
+      > .now{
+        font-size: 4vh;
+      }
     }
   }
 

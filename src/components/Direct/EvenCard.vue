@@ -11,18 +11,24 @@
           <p>前期处置：高速集团二分公司，<span>联系监控中心</span></p>
         </div>
       </div>
+      <div class="more">
+        <span @click="showInfo" :class="{ isActive: isShowInfo}">显示详情</span>
+        <span @click="isShowAbout = !isShowAbout" :class="{ isActive :isShowAbout }">相关资源</span>
+      </div>
     </div>
 
-    <!--<div class="xxxx" style="height: 50px">-->
-
-    <!--</div>-->
-    <div class="more">
-      <span @click="$emit('click',echartId)">显示详情</span>
-      <span>相关资源</span>
+    <div class="bottom" v-show="isShowAbout">
+      <div class="item" v-for="n in 4">
+        <img :src="video"  alt="">
+        <p>管辖管辖</p>
+      </div>
     </div>
+
   </div>
 </template>
 <script>
+  import relation from './relation'
+  import video from '../../assets/imgs/video.png'
   // 引入基本模板
   let echarts = require("echarts/lib/echarts");
   // 引入柱状图组件
@@ -33,6 +39,12 @@
   require("echarts/lib/component/title");
   export default {
     props:{
+      itemIndex:{
+        type: Number
+      },
+      showView:{
+        type: Boolean
+      },
       echartId:{
         type: Number
       },
@@ -40,8 +52,14 @@
         type: String
       }
     },
+    components:{
+      relation: relation
+    },
     data() {
       return {
+        isShowInfo: false,
+        isShowAbout: false,
+        video: video,
         myEcharts:{},
         chartOption:{
           tooltip: {
@@ -92,7 +110,24 @@
       this.checkView();
       window.eventHub.$on('resize', this.resizeEchart);
     },
+    watch:{
+      itemIndex(newIndex, oldIndex) {
+        console.log(newIndex);
+        if (newIndex == this.echartId&&this.showView) {
+          this.isShowInfo = true;
+        }else{
+          this.isShowInfo = false;
+        }
+      }
+    },
     methods: {
+      showInfo(){
+        if (!this.isShowInfo) {
+          this.$emit('click',this.echartId);
+        }else{
+          this.$emit('click',null);
+        }
+      },
       createEcharts(id) {
         console.log(id);
         let echartObj = echarts.init(document.getElementById(id));
@@ -116,13 +151,16 @@
 <style lang="scss" scoped>
   #card {
     width: 75vh;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, .9);
+    /*padding: 15px;*/
+    /*background-color: rgba(255, 255, 255, .9);*/
     user-select:none;
+    background: linear-gradient(180deg, rgba(246, 246, 222, 0.8) 0%, #fff 50%);
     position: relative;
     border-bottom: 1px solid #ccc;
     > .top{
-      height: 28vh;
+      position: relative;
+      padding: 15px;
+      height: 35vh;
       > p {
         width: 100%;
         font-size: 3.5vh;
@@ -132,7 +170,7 @@
       }
       > .inner {
         width: 100%;
-        height: calc(100% - 20px);
+        height: 90%;
         display: inline-flex;
         > .mychart {
           width: 45%;
@@ -155,23 +193,56 @@
           }
         }
       }
-    }
-    > .more{
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      font-size: 0;
-      color: #666;
-      >span{
-        display: inline-block;
-        font-size: 1.5vh;
-        font-weight: 200;
-        padding: 5px 10px;
-        border: 1px solid #ccc;
-        border-bottom: none;
-        border-right: none;
-        cursor: pointer;
+      > .more{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        font-size: 0;
+        color: #666;
+        >span{
+          display: inline-block;
+          font-size: 1.5vh;
+          font-weight: 200;
+          padding: 5px 10px;
+          border: 1px solid #ccc;
+          border-bottom: none;
+          border-right: none;
+          cursor: pointer;
+        }
+        > .isActive{
+          background-color: #bbc9da;
+        }
       }
     }
+    > .bottom{
+      width: 100%;
+      padding: 1vh 3vh;
+      display: inline-flex;
+      background-color: #bbc9da;
+      box-shadow: 0px 0px 10px #888888 inset;
+      > .item{
+        border: 1px solid #999;
+        width: 9vh;
+        height: 8vh;
+        border-radius: 1vh;
+        background-color: #9aa2b5;
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        > img {
+          width: 5vh;
+          margin-bottom: 0.5vh;
+        }
+        > p {
+          font-size: 1vh;
+          color: #e1e3e9;
+        }
+        &:not(:last-child){
+          margin-right: 2vh;
+        }
+      }
+    }
+
   }
 </style>
