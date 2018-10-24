@@ -45,7 +45,7 @@
   import zhihuidiaodu from '../../assets/imgs/zhihuidiaodu.png'
 
   export default {
-    name: 'HelloWorld',
+    // name: 'home1111',
     components: {
       'b-card': Card,
       'b-date': Date,
@@ -98,7 +98,7 @@
     position: relative;
     min-width: 1920px;
     height: 100%;
-    background: url("../../assets/imgs/background.png");
+    background: url("../../assets/imgs/bg.png");
     background-size:100% 100%;
     display: flex;
     flex-direction: row;
@@ -120,7 +120,7 @@
 
   }
   .c-name >img{
-    height: 6vh;
+    height: 7vh;
     margin-top: 14vh;
   }
   .mr {

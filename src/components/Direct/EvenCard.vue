@@ -142,7 +142,6 @@
         let ch = document.documentElement.clientHeight;
         this.chartOption.textStyle.fontSize = ch * 0.025;
         this.myEcharts = this.createEcharts(this.echartId);
-        console.log(this.chartOption.textStyle.fontSize);
       }
     }
   }
